@@ -13,6 +13,9 @@ Base = declarative_base()
 class Student(Base):
     __tablename__ = 'students'
 
+    # speed up lookups on certain column values
+    Index("index_name", "name")
+
     id = Column(Integer(), primary_key=True)
     name = Column(String())
     email = Column(String(55))
@@ -63,6 +66,9 @@ if __name__ == '__main__':
     # python lib/sqlalchemy_sandbox.p
     # New student ID is 1.
 
+    print("line 70: ", albert_einstein)
+    # line 81:  Student None:('Albert Einstein',)Grade 6
+
     alan_turing = Student(
         name="Alan Turing",
         email="alan.turing@sherborne.edu",
@@ -74,9 +80,11 @@ if __name__ == '__main__':
         ),
     )
 
+    
+
     # # create session, student objects
     session.bulk_save_objects([albert_einstein, alan_turing])
-    # session.commit()
+    session.commit()
     print(f"New student ID is {albert_einstein.id}.")
     print(f"New student ID is {alan_turing.id}.")
     # python lib/sqlalchemy_sandbox.p
@@ -93,9 +101,7 @@ if __name__ == '__main__':
     # ==========================================================================
 
     # 6. ============= Select Only Certain Columns ============================
-    names = session.query(Student.name).all()
-    # session.commit()
-    print(names)
+    names = session.query(Student.name).all()    print(names)
     # [('Albert Einstein',), ('Alan Turing',)]
     # =========================================================================
 
@@ -141,7 +147,7 @@ if __name__ == '__main__':
     # method 1 => for loop
     for student in session.query(Student):
         student.grade += 1
-    # session.commit()
+    session.commit()
     print([(student.name, student.grade) for student in session.query(Student)])
     # [('Albert Einstein', 7), ('Alan Turing', 12)]
 
