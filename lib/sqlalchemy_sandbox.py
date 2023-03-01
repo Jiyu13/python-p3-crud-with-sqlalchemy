@@ -60,9 +60,11 @@ if __name__ == '__main__':
     # create session, student objects
     # generate a statement to include in the session's transaction
     # commit() executes all statements in the transaction, save any changes to db, update your Student object with an id
+    
     # session.add(albert_einstein)
     # session.commit()
     # print(f"New student ID is {albert_einstein.id}.")
+
     # python lib/sqlalchemy_sandbox.p
     # New student ID is 1.
 
@@ -101,7 +103,8 @@ if __name__ == '__main__':
     # ==========================================================================
 
     # 6. ============= Select Only Certain Columns ============================
-    names = session.query(Student.name).all()    print(names)
+    names = session.query(Student.name).all()
+    print(names)
     # [('Albert Einstein',), ('Alan Turing',)]
     # =========================================================================
 
